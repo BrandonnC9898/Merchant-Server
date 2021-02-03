@@ -3,3 +3,5 @@ class OrderInformation {
         this.amountDetails = amountDetails;
     }
 }
+
+exports.OrderInformation = OrderInformation;

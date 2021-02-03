@@ -3,3 +3,5 @@ class PaymentInformation {
         this.card = card;
     }
 }
+
+exports.PaymentInformation = PaymentInformation;

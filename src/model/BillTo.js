@@ -24,3 +24,7 @@ class Location {
         this.country = country;
     }
 }
+
+exports.BillTo = BillTo;
+exports.Client = Client;
+exports.Location = Location;

@@ -5,3 +5,5 @@ class Card {
         this.expYear = expYear;
     }
 }
+
+exports.Card = Card;

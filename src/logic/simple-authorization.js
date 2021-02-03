@@ -1,9 +1,7 @@
 'use strict';
 
 var cybersourceRestApi = require('cybersource-rest-client');
-var path = require('path');
-var filePath = path.resolve('Data/Configuration.js');
-var configuration = require(filePath);
+var configuration = require('../Data/Configuration');
 
 function simple_authorization(enableCapture, simpleAuthorization){
     try {
@@ -32,8 +30,8 @@ function getRequestObj(simpleAuthorization, enableCapture){
 
 function getClientInformation(simpleAuthorization){
     var clientReferenceInformation = new cybersourceRestApi.Ptsv2paymentsClientReferenceInformation();
-    clientReferenceInformation.code = simpleAuthorization.clientInformation.code;
-    return clientInformation;
+    clientReferenceInformation.code = simpleAuthorization.clientReferenceInformation.code;
+    return clientReferenceInformation;
 }
 
 function getProcessingInformation(enableCapture){

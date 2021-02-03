@@ -3,3 +3,5 @@ class ClientReferenceInformation {
         this.code = code;
     };
 }
+
+exports.ClientReferenceInformation = ClientReferenceInformation;

@@ -6,3 +6,5 @@ class SimpleAuthorization {
         this.billTo = billTo;
     }
 }
+
+exports.SimpleAuthorization = SimpleAuthorization;
