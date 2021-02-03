@@ -6,6 +6,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Services
+app.use(require('./src/services/payment'));
+
+app.get('/', (req, res) => {
+    res.send('Server root');
+});
+
 app.listen(port, () => {
     console.log(`Running at http://localhost:${port}`);
 });
