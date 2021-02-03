@@ -21,16 +21,16 @@ function getPaymentInstance(){
 
 function getRequestObj(simpleAuthorization, enableCapture){
     var requestObj = new cybersourceRestApi.CreatePaymentRequest();
-    requestObj.clientReferenceInformation = getClientInformation(simpleAuthorization);
+    requestObj.clientReferenceInformation = getClientReferenceInformation(simpleAuthorization.clientReferenceInformation);
     requestObj.processingInformation = getProcessingInformation(enableCapture);
     requestObj.paymentInformation = getPaymentInformation(simpleAuthorization.paymentInformation);
     requestObj.orderInformation = getOrderInformation(simpleAuthorization.orderInformation, simpleAuthorization.billTo);
     return requestObj;
 }
 
-function getClientInformation(simpleAuthorization){
+function getClientReferenceInformation(simpClientRefInfo){
     var clientReferenceInformation = new cybersourceRestApi.Ptsv2paymentsClientReferenceInformation();
-    clientReferenceInformation.code = simpleAuthorization.clientReferenceInformation.code;
+    clientReferenceInformation.code = simpClientRefInfo.code;
     return clientReferenceInformation;
 }
 
@@ -96,6 +96,7 @@ function createPaymentCall(error, data, response){
     }
     console.log('\nResponse : ' + JSON.stringify(response));
     console.log('\nResponse Code of Process a Payment : ' + JSON.stringify(response['status']));
+    console.log('\nID of the Payment : ' + data['id']);
 }
 
 module.exports.simple_authorization = simple_authorization;
