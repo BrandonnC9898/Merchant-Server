@@ -35,4 +35,10 @@ router.get('/capture', (req, res) => {
     res.send('It works');
 });
 
+router.get('/paymentcapture', (req, res) => {
+    console.log('Simple Authorization With Capture');
+    simple_Authorization.simple_authorization(true, simpAuthorization);
+    res.send('It works');
+});
+
 module.exports = router;
