@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const simple_Authorization = require('../logic/simple-authorization');
 const capture_Payment = require('../logic/capture-payment');
+const authorization_reversal = require('../logic/authorization-reversal');
 
 const simpleAuthorization = require('../model/SimpleAuthorization');
 const clientReferenceInformation = require('../model/ClientReferenceInformation');
@@ -21,7 +22,7 @@ var location = new billTo.Location('1 Market St', 'san francisco', 'CA', '94105'
 var myBillTo = new billTo.BillTo(client, location);
 var simpAuthorization = new simpleAuthorization.SimpleAuthorization(clientInfo, paymentInfo, orderInfo, myBillTo);
 
-var idAutPayment = '6123675158796014504005';
+var idAutPayment = '6123815738306599904006';
 
 router.get('/payment', (req, res) => {
     console.log('Simple Authorization');
@@ -38,6 +39,12 @@ router.get('/capture', (req, res) => {
 router.get('/paymentcapture', (req, res) => {
     console.log('Simple Authorization With Capture');
     simple_Authorization.simple_authorization(true, simpAuthorization);
+    res.send('It works');
+});
+
+router.get('/reversal', (req, res) => {
+    console.log('Authorization Reversal');
+    authorization_reversal.authorization_reversal(clientInfo, orderInfo, idAutPayment);
     res.send('It works');
 });
 
