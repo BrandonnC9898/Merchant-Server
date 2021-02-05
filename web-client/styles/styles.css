@@ -63,3 +63,13 @@ input {
 .id > * {
     color: white;
 }
+
+.submit-btn {
+    padding: 5px 10px;
+}
+
+#tx-type-form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}

@@ -11,11 +11,13 @@
     <header class="brand">
         <h1>Seller's Website</h1>
     </header>
-    <form action="" class="tx-form" id="transaction-form" name="transaction-form" method="POST">
+    <form action="#" class="tx-form" id="transaction-form" name="transaction-form" method="POST">
         <div class="client-ref-info">
             <h1 class="form-header">Transaction information</h1>
             <label for="orderCode">Order code</label>
-            <input type="text" name="ordercode" value="TX_1">
+            <input type="text" name="orderCode" value="TX_1">
+            <label for="idTransaction">ID transaction</label>
+            <input type="text" name="idTransaction">
         </div>
 
         <div class="card">
@@ -73,7 +75,16 @@
                 <input type="text" name="phoneNumber" value="4158880000">
             </div>
         </div>
-        <button type="submit">Send</button>
+        <div id="tx-type-form">
+            <select name="txType">
+                <option value="simpleAuth">Simple Authorization</option>
+                <option value="capturePayment">Capture Payment</option>
+                <option value="simpAuthCapture">Simple Authorization With Capture</option>
+                <option value="authReversal">Authorization Reversal</option>
+                <option value="refundPayment">Refund a Payment</option>
+            </select>
+            <button type="submit" class="submit-btn">Send</button>
+        </div>
     </form>
 
     <div id="response">

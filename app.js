@@ -8,6 +8,7 @@ app.use(cors());
 
 // Services
 app.use('/test/', require('./src/services/test-services'));
+app.use(require('./src/services/services'));
 
 app.get('/', (req, res) => {
     res.send('Server root');
