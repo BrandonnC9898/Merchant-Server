@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 // Services
-app.use(require('./src/services/payment'));
+app.use('/test/', require('./src/services/test-services'));
 
 app.get('/', (req, res) => {
     res.send('Server root');

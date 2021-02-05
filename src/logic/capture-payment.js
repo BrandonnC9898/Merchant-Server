@@ -3,11 +3,11 @@
 var cybersourceRestApi = require("cybersource-rest-client");
 var configuration = require('../Data/Configuration');
 
-function capture_payment(clientReferenceInformation, orderInformation, billTo, idAutPayment){
+function capture_payment(clientReferenceInformation, orderInformation, billTo, idAutPayment, callback){
     try {
         var instance = getCaptureInstance();
         var requestObj = getRequestObj(clientReferenceInformation, orderInformation, billTo);
-        instance.capturePayment(requestObj, idAutPayment, capturePaymentCall);
+        instance.capturePayment(requestObj, idAutPayment, callback);
     } catch (error) {
         console.log("\nException on calling the API : " + error);
     }
@@ -43,17 +43,6 @@ function getAmountDetails(amountDetails){
     orderInformationAmountDetails.totalAmount = amountDetails.totalAmount;
     orderInformationAmountDetails.currency = amountDetails.currency;
     return orderInformationAmountDetails;
-}
-
-function capturePaymentCall(error, data, response){
-    if (error) {
-        console.log('\nError : ' + JSON.stringify(error));
-    }
-    else if (data) {
-        console.log('\nData : ' + JSON.stringify(data));
-    }
-    console.log('\nResponse : ' + JSON.stringify(response));
-    console.log('\nResponse Code of Capture a Payment : ' + JSON.stringify(response['status']));
 }
 
 module.exports.capture_payment = capture_payment;

@@ -3,11 +3,11 @@
 var cybersourceRestApi = require('cybersource-rest-client');
 var configuration = require('../Data/Configuration');
 
-function authorization_reversal(clientReferenceInformation, reversalInformation, idAutPayment){
+function authorization_reversal(clientReferenceInformation, reversalInformation, idAutPayment, callback){
     try {
         var instance = getReversalInstance();
         var requestObj = getRequestObj(clientReferenceInformation, reversalInformation);
-		instance.authReversal(idAutPayment, requestObj, reversalCall);
+		instance.authReversal(idAutPayment, requestObj, callback);
     } catch (error) {
         console.log('\nException on calling the API : ' + error);
     }
@@ -42,17 +42,6 @@ function getAmountDetails(amountDetails){
     var reversalInformationAmountDetails = new cybersourceRestApi.Ptsv2paymentsidreversalsReversalInformationAmountDetails();
     reversalInformationAmountDetails.totalAmount = amountDetails.totalAmount;
     return reversalInformationAmountDetails;
-}
-
-function reversalCall(error, data, response){
-    if (error) {
-        console.log('\nError : ' + JSON.stringify(error));
-    }
-    else if (data) {
-        console.log('\nData : ' + JSON.stringify(data));
-    }
-    console.log('\nResponse : ' + JSON.stringify(response));
-    console.log('\nResponse Code of Process an Authorization Reversal : ' + JSON.stringify(response['status']));
 }
 
 module.exports.authorization_reversal = authorization_reversal;

@@ -3,11 +3,11 @@
 var cybersourceRestApi = require('cybersource-rest-client');
 var configuration = require('../Data/Configuration');
 
-function simple_authorization(enableCapture, simpleAuthorization){
+function simple_authorization(enableCapture, simpleAuthorization, callback){
     try {
         var instance = getPaymentInstance();
         var requestObj = getRequestObj(simpleAuthorization, enableCapture);
-		instance.createPayment(requestObj, createPaymentCall);
+		instance.createPayment(requestObj, callback);
     } catch (error) {
         console.log('\nException on calling the API : ' + error);
     }
@@ -85,18 +85,6 @@ function getBillTo(billTo){
     orderInformationBillTo.email = client.email;
     orderInformationBillTo.phoneNumber = client.phoneNumber;
     return orderInformationBillTo;
-}
-
-function createPaymentCall(error, data, response){
-    if (error) {
-        console.log('\nError : ' + JSON.stringify(error));
-    }
-    else if (data) {
-        console.log('\nData : ' + JSON.stringify(data));
-    }
-    console.log('\nResponse : ' + JSON.stringify(response));
-    console.log('\nResponse Code of Process a Payment : ' + JSON.stringify(response['status']));
-    console.log('\nID of the Payment : ' + data['id']);
 }
 
 module.exports.simple_authorization = simple_authorization;
