@@ -6,9 +6,13 @@ const authorization_reversal = require('../logic/authorization-reversal');
 const refund_payment = require('../logic/refund-payment');
 const convObj = require('../logic/converter-to-object');
 
+var optNoCapture = {enableCapture: false, decisionManager: false};
+var optCapture = {enableCapture: true, decisionManager: false};
+var optDM = {enableCapture: false, decisionManager: true};
+
 router.post('/payment', (req, res) => {
     console.log('Simple Authorization');
-    simple_Authorization.simple_authorization(false, convObj.getSimpleAutorization(req.body), (error, data, response) => {
+    simple_Authorization.simple_authorization(optNoCapture, convObj.getSimpleAutorization(req.body), (error, data, response) => {
         printResults(error, data, response);
         res.json({error: error, data: data, response: response});
     });
@@ -26,7 +30,7 @@ router.post('/capture', (req, res) => {
 
 router.post('/payment/capture', (req, res) => {
     console.log('Simple Authorization With Capture');
-    simple_Authorization.simple_authorization(true, convObj.getSimpleAutorization(req.body), (error, data, response) => {
+    simple_Authorization.simple_authorization(optCapture, convObj.getSimpleAutorization(req.body), (error, data, response) => {
         printResults(error, data, response);
         res.json({error: error, data: data, response: response});
     });
@@ -45,6 +49,14 @@ router.post('/refund', (req, res) => {
     console.log('Refund a Payment');
     refund_payment.refund_payment(convObj.getClientReferenceInformation(req.body),
     convObj.getOrderInformation(req.body), convObj.getIdAuthPayment(req.body), (error, data, response) => {
+        printResults(error, data, response);
+        res.json({error: error, data: data, response: response});
+    });
+});
+
+router.post('/payment/decision', (req, res) => {
+    console.log('Decision Manager');
+    simple_Authorization.simple_authorization(optDM, convObj.getSimpleAutorization(req.body), (error, data, response) => {
         printResults(error, data, response);
         res.json({error: error, data: data, response: response});
     });

@@ -54,6 +54,8 @@ function getRoute() {
             return 'reversal';
         case "refundPayment":
             return 'refund';
+        case "authDecisionManager":
+            return 'payment/decision';
         default:
             return '';
     }

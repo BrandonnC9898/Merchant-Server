@@ -19,15 +19,21 @@ var paymentInfo = new paymentInformation.PaymentInformation(myCard);
 var amountDet = new amountDetails.AmountDetails('0.01', 'USD');
 var orderInfo = new orderInformation.OrderInformation(amountDet);
 var client = new billTo.Client(0, 'John', 'Doe', 'test@cybs.com', '4158880000');
+var clientReject = new billTo.Client(0, 'John', 'Doe', 'assessment@reject.com.br', '4158880000');
 var location = new billTo.Location('1 Market St', 'san francisco', 'CA', '94105', 'US');
 var myBillTo = new billTo.BillTo(client, location);
+var myBillToReject = new billTo.BillTo(clientReject, location);
 var simpAuthorization = new simpleAuthorization.SimpleAuthorization(clientInfo, paymentInfo, orderInfo, myBillTo);
+var simpAuthReject = new simpleAuthorization.SimpleAuthorization(clientInfo, paymentInfo, orderInfo, myBillToReject);
 
 var idAutPayment = '';
+var optNoCapture = {enableCapture: false, decisionManager: false};
+var optCapture = {enableCapture: true, decisionManager: false};
+var optDM = {enableCapture: false, decisionManager: true};
 
 router.get('/payment', (req, res) => {
     console.log('Simple Authorization Test');
-    simple_Authorization.simple_authorization(false, simpAuthorization, (error, data, response) => {
+    simple_Authorization.simple_authorization(optNoCapture, simpAuthorization, (error, data, response) => {
         printResults(error, data, response);
         res.json({error: error, data: data, response: response});
     });
@@ -35,7 +41,7 @@ router.get('/payment', (req, res) => {
 
 router.get('/capture', (req, res) => {
     console.log('Capture Payment Test');
-    simple_Authorization.simple_authorization(false, simpAuthorization, (error, data, response) => {
+    simple_Authorization.simple_authorization(optNoCapture, simpAuthorization, (error, data, response) => {
         idAutPayment = data['id'];
         capture_Payment.capture_payment(clientInfo, orderInfo, billTo, idAutPayment, (error, data, response) => {
             printResults(error, data, response);
@@ -46,7 +52,7 @@ router.get('/capture', (req, res) => {
 
 router.get('/payment/capture', (req, res) => {
     console.log('Simple Authorization With Capture Test');
-    simple_Authorization.simple_authorization(true, simpAuthorization, (error, data, response) => {
+    simple_Authorization.simple_authorization(optCapture, simpAuthorization, (error, data, response) => {
         printResults(error, data, response);
         res.json({error: error, data: data, response: response});
     });
@@ -54,7 +60,7 @@ router.get('/payment/capture', (req, res) => {
 
 router.get('/reversal', (req, res) => {
     console.log('Authorization Reversal Test');
-    simple_Authorization.simple_authorization(false, simpAuthorization, (error, data, response) => {
+    simple_Authorization.simple_authorization(optNoCapture, simpAuthorization, (error, data, response) => {
         idAutPayment = data['id'];
         authorization_reversal.authorization_reversal(clientInfo, orderInfo, idAutPayment, (error, data, response) => {
             printResults(error, data, response);
@@ -65,12 +71,20 @@ router.get('/reversal', (req, res) => {
 
 router.get('/refund', (req, res) => {
     console.log('Refund a Payment Test');
-    simple_Authorization.simple_authorization(true, simpAuthorization, (error, data, response) => {
+    simple_Authorization.simple_authorization(optCapture, simpAuthorization, (error, data, response) => {
         idAutPayment = data['id'];
         refund_payment.refund_payment(clientInfo, orderInfo, idAutPayment, (error, data, response) => {
             printResults(error, data, response);
             res.json({error: error, data: data, response: response});
         });
+    });
+});
+
+router.get('/payment/decision', (req, res) => {
+    console.log('Decision Manager Rejection');
+    simple_Authorization.simple_authorization(optDM, simpAuthReject, (error, data, response) => {
+        printResults(error, data, response);
+        res.json({error: error, data: data, response: response});
     });
 });
 

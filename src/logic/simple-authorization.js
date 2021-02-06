@@ -3,10 +3,10 @@
 var cybersourceRestApi = require('cybersource-rest-client');
 var configuration = require('../Data/Configuration');
 
-function simple_authorization(enableCapture, simpleAuthorization, callback){
+function simple_authorization(options, simpleAuthorization, callback){
     try {
         var instance = getPaymentInstance();
-        var requestObj = getRequestObj(simpleAuthorization, enableCapture);
+        var requestObj = getRequestObj(simpleAuthorization, options);
 		instance.createPayment(requestObj, callback);
     } catch (error) {
         console.log('\nException on calling the API : ' + error);
@@ -19,10 +19,10 @@ function getPaymentInstance(){
     return new cybersourceRestApi.PaymentsApi(configObject, apiClient);
 }
 
-function getRequestObj(simpleAuthorization, enableCapture){
+function getRequestObj(simpleAuthorization, options){
     var requestObj = new cybersourceRestApi.CreatePaymentRequest();
     requestObj.clientReferenceInformation = getClientReferenceInformation(simpleAuthorization.clientReferenceInformation);
-    requestObj.processingInformation = getProcessingInformation(enableCapture);
+    requestObj.processingInformation = getProcessingInformation(options);
     requestObj.paymentInformation = getPaymentInformation(simpleAuthorization.paymentInformation);
     requestObj.orderInformation = getOrderInformation(simpleAuthorization.orderInformation, simpleAuthorization.billTo);
     return requestObj;
@@ -34,11 +34,16 @@ function getClientReferenceInformation(simpClientRefInfo){
     return clientReferenceInformation;
 }
 
-function getProcessingInformation(enableCapture){
+function getProcessingInformation(options){
     var processingInformation = new cybersourceRestApi.Ptsv2paymentsProcessingInformation();
     processingInformation.capture = false;
-    if (enableCapture === true) {
+    if (options.enableCapture === true) {
         processingInformation.capture = true;
+    }
+    if (options.decisionManager === true) {
+        var actionList = new Array();
+		actionList.push("DECISION");
+		processingInformation.actionList = actionList;
     }
     return processingInformation;
 }
