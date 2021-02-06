@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header class="brand">
+        <h1>Seller's Website</h1>
+    </header>
+    <form action="#" class="tx-form" id="transaction-form" name="transaction-form" method="POST">
+        <div class="client-ref-info">
+            <h1 class="form-header">Transaction information</h1>
+            <label for="orderCode">Order code</label>
+            <input type="text" name="orderCode" value="TX_1">
+            <label for="idTransaction">ID transaction</label>
+            <input type="text" name="idTransaction">
+        </div>
+
+        <div class="card">
+            <h1 class="form-header">Card</h1>
+            <label for="cardNumber">Number</label>
+            <input type="text" name="cardNumber" value="4111111111111111">
+            <label for="expMonth">Expiration month</label>
+            <input type="text" name="expMonth" value="12">
+            <label for="expYear">Expiration year</label>
+            <input type="text" name="expYear" value="2031">
+        </div>
+
+        <div class="amount-details">
+            <h1 class="form-header">Amount details</h1>
+            <label for="totalAmount">Total amount</label>
+            <input type="text" name="totalAmount" value="1.00">
+            <label for="currency">Currency</label>
+            <input type="text" name="currency" value="USD">
+        </div>
+
+        <div class="bill-to">
+            <h1 class="form-header">Bill to</h1>
+            <div>
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" value="John">
+                <label for="lastName">Last name</label>
+                <input type="text" name="lastName" value="Doe">
+            </div>
+            <div id="location-form">
+                <div>
+                    <label for="address">Adress</label>
+                    <input type="text" name="address" value="1 Market St">
+                </div>
+                <div>
+                    <label for="locality">Locality</label>
+                    <input type="text" name="locality" value="san francisco">
+                </div>
+                <div>
+                    <label for="admArea">Administrative area</label>
+                    <input type="text" name="admArea" value="CA">
+                </div>
+                <div>
+                    <label for="postalCode">Postal code</label>
+                    <input type="text" name="postalCode" value="94105">
+                </div>
+                <div>
+                    <label for="country">Country</label>
+                    <input type="text" name="country" value="US">
+                </div>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" name="email" value="test@cybs.com">
+                <label for="phoneNumber">Phone number</label>
+                <input type="text" name="phoneNumber" value="4158880000">
+            </div>
+        </div>
+        <div id="tx-type-form">
+            <select name="txType">
+                <option value="simpleAuth">Simple Authorization</option>
+                <option value="capturePayment">Capture Payment</option>
+                <option value="simpAuthCapture">Simple Authorization With Capture</option>
+                <option value="authReversal">Authorization Reversal</option>
+                <option value="refundPayment">Refund a Payment</option>
+                <option value="authDecisionManager">Authorization With Decision Manager</option>
+            </select>
+            <button type="submit" class="submit-btn">Send</button>
+        </div>
+    </form>
+
+    <div id="response">
+    </div>
+    <script src="scripts/scripts.js"></script>
+</body>
+</html>
